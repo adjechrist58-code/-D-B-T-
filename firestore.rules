@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == "adjechrist58@gmail.com" ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Store settings: readable and writable by admin and visitors
+    match /settings/{settingId} {
+      allow read, write: if true;
+    }
+
+    // Products catalog: readable and writable
+    match /products/{productId} {
+      allow read, write: if true;
+    }
+
+    // Special offers & promotions: readable and writable
+    match /offers/{offerId} {
+      allow read, write: if true;
+    }
+
+    // Customer orders: readable and writable
+    match /orders/{orderId} {
+      allow read, write: if true;
+    }
+
+    // Admins registry
+    match /admins/{adminId} {
+      allow read, write: if isSignedIn();
+    }
+  }
+}

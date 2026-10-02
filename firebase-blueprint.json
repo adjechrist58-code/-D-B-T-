@@ -1,0 +1,107 @@
+{
+  "entities": {
+    "StoreSettings": {
+      "title": "StoreSettings",
+      "description": "Configuration globale de la boutique Give to God",
+      "type": "object",
+      "properties": {
+        "storeName": { "type": "string", "maxLength": 100 },
+        "slogan": { "type": "string", "maxLength": 200 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "countryCode": { "type": "string", "maxLength": 10 },
+        "email": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 200 },
+        "currency": { "type": "string", "maxLength": 20 },
+        "openingHours": { "type": "string", "maxLength": 200 },
+        "heroTitle": { "type": "string", "maxLength": 150 },
+        "heroSubtitle": { "type": "string", "maxLength": 300 },
+        "heroImageUrl": { "type": "string", "maxLength": 1000 },
+        "announcement": { "type": "string", "maxLength": 200 },
+        "showAnnouncement": { "type": "boolean" },
+        "instagramUrl": { "type": "string", "maxLength": 500 },
+        "facebookUrl": { "type": "string", "maxLength": 500 },
+        "tiktokUrl": { "type": "string", "maxLength": 500 },
+        "deliveryFee": { "type": "number" },
+        "deliveryFreeThreshold": { "type": "number" }
+      },
+      "required": ["storeName", "phone"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Article de mode et vêtement de la boutique",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 150 },
+        "category": { "type": "string", "maxLength": 50 },
+        "price": { "type": "number" },
+        "originalPrice": { "type": "number" },
+        "description": { "type": "string", "maxLength": 3000 },
+        "images": { "type": "array" },
+        "sizes": { "type": "array" },
+        "colors": { "type": "array" },
+        "inStock": { "type": "boolean" },
+        "isFeatured": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "category", "price", "inStock"]
+    },
+    "Offer": {
+      "title": "Offer",
+      "description": "Promotion ou offre spéciale avec réduction et date de fin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 150 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "badge": { "type": "string", "maxLength": 50 },
+        "oldPrice": { "type": "number" },
+        "newPrice": { "type": "number" },
+        "discountPercentage": { "type": "number" },
+        "imageUrl": { "type": "string", "maxLength": 1000 },
+        "startDate": { "type": "string", "maxLength": 50 },
+        "endDate": { "type": "string", "maxLength": 50 },
+        "isActive": { "type": "boolean" },
+        "productId": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["title", "newPrice", "isActive"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Commande passée par un client",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "customerName": { "type": "string", "maxLength": 100 },
+        "customerPhone": { "type": "string", "maxLength": 30 },
+        "customerAddress": { "type": "string", "maxLength": 300 },
+        "customerCity": { "type": "string", "maxLength": 100 },
+        "note": { "type": "string", "maxLength": 500 },
+        "items": { "type": "array" },
+        "totalAmount": { "type": "number" },
+        "deliveryFee": { "type": "number" },
+        "status": { "type": "string", "maxLength": 30 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["customerName", "customerPhone", "customerAddress", "items", "totalAmount", "status"]
+    }
+  },
+  "firestore": {
+    "/settings/{settingId}": {
+      "schema": "StoreSettings",
+      "description": "Paramètres publics et d'administration de la boutique"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Catalogue de vêtements et articles de mode"
+    },
+    "/offers/{offerId}": {
+      "schema": "Offer",
+      "description": "Promotions actives et offres temporaires"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Commandes passées par les acheteurs"
+    }
+  }
+}

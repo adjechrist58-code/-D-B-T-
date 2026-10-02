@@ -1,0 +1,6 @@
+{
+  "name": "Give to God - Boutique de Prêt-à-Porter",
+  "description": "Boutique en ligne officielle Give to God. Découvrez nos collections exclusives de vêtements, t-shirts, sweats et accessoires de qualité.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
